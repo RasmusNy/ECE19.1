@@ -1,6 +1,6 @@
 %   Program process user file and stores data in appropriate matrix
 %   ECE19.1
-% Kadrian
+
 
 % Ask User For Data Typ AC/DC/Transient
 dataParameter = questdlg('What Data Parameter?', ...
