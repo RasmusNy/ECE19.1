@@ -12,8 +12,8 @@ switch dataParameter
         signalType = 0; % AC
     case 'DC'
         signalType = 1; % DC
-    case 'Transient'
-        signalType = 2; % Transient
+     case 'Transient'
+         signalType = 2; % Transient
 end
 
 % Select the file
@@ -22,6 +22,11 @@ dataFile = [pathName, fileName];
 
 %import data
 allData = importdata(dataFile);
+
+%Plot allData
+[m,n] = size(allData.data);
+
+plot(allData.data(1:300:end,1),allData.data(1:300:end,2))
 
 % Parse Parameter names
 %Time	C1 TRU OUTPUT V	C1 TRU OUTPUT I Pos	R TRU OUTPUT V	R TRU OUTPUT I
