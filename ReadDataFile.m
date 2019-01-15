@@ -23,10 +23,24 @@ dataFile = [pathName, fileName];
 %import data
 allData = importdata(dataFile);
 
-%Plot allData
+%Maps matrix dimensions to m & n
 [m,n] = size(allData.data);
 
+%Plot allData
 plot(allData.data(1:300:end,1),allData.data(1:300:end,2))
+
+%Calculate channel 1 RMS
+rootMeanSquare = rms(allData.data(:,2))
+
+%Calculate channel 1 peak to peak
+p2p = peak2peak(allData.data(:,2))
+
+%Calculate Max, Min, Mean
+maximum = max(allData.data(:,2))
+
+minimum = min(allData.data(:,2))
+
+average = mean(allData.data(:,2))
 
 % Parse Parameter names
 %Time	C1 TRU OUTPUT V	C1 TRU OUTPUT I Pos	R TRU OUTPUT V	R TRU OUTPUT I
