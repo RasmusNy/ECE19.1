@@ -32,8 +32,10 @@ plot(allData.data(1:300:end,1),allData.data(1:300:end,2))
 %Time	C1 TRU OUTPUT V	C1 TRU OUTPUT I Pos	R TRU OUTPUT V	R TRU OUTPUT I
 %Pos%
 
-y = rms(allData.data(1:1:12),2);
-
+function RMS = RootMeanSquare(userSpcified)
+RMS = rms(allData.data(1:1:12),2);
+return
+end
 
 % AC File Processing,
 
