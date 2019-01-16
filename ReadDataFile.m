@@ -32,10 +32,24 @@ plot(allData.data(1:300:end,1),allData.data(1:300:end,2))
 %Time	C1 TRU OUTPUT V	C1 TRU OUTPUT I Pos	R TRU OUTPUT V	R TRU OUTPUT I
 %Pos%
 
-function RMS = RootMeanSquare(userSpcified)
-RMS = rms(allData.data(1:1:12),2);
+
+RootMeanSquare(allData)
+Peak2Peak(allData)
+
+% Root Mean Square function
+function RMS = RootMeanSquare(x)
+userSpcified = 1:1:12;
+RMS = rms(x.data(userSpcified),2);
 return
 end
+
+% Root Mean Square function
+function P2P = Peak2Peak(x)
+userSpcified = 1:1:12;
+P2P = rms(x.data(userSpcified),2);
+return
+end
+
 
 % AC File Processing,
 
