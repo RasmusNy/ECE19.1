@@ -1,0 +1,17 @@
+RootMeanSquare(allData)
+Peak2Peak(allData)
+
+% Root Mean Square function
+function RMS = RootMeanSquare(x)
+userSpcified = 1:1:12;
+RMS = rms(x.data(userSpcified),2);
+return
+end
+
+% Root Mean Square function
+function P2P = Peak2Peak(x)
+userSpcified = 1:1:12;
+P2P = rms(x.data(userSpcified),2);
+return
+end
+
