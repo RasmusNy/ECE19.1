@@ -10,7 +10,7 @@ if a<b
 else
     maxValue = max(VoltageData(b:a));
     minValue = min(VoltageData(b:a));
-    meanValue = mean(VoltageData(a:b));
+    meanValue = mean(VoltageData(b:a));
 end
 
     
