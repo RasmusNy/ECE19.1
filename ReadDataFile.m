@@ -27,7 +27,11 @@ allData = importdata(dataFile);
 %Time	C1 TRU OUTPUT V	C1 TRU OUTPUT I Pos	R TRU OUTPUT V	R TRU OUTPUT I
 %Pos%
 
+%Maps matrix dimensions to m & n
+[m,n] = size(allData.data);
 
+%Plot allData
+plot(allData.data(1:300:end,1),allData.data(1:300:end,2))
 
 
 % AC File Processing
