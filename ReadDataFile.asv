@@ -1,0 +1,111 @@
+%   Program process user file and stores data in appropriate matrix
+%   ECE19.1
+
+% Ask User For Data Typ AC/DC/Transient
+dataParameter = questdlg('What Data Parameter?', ...
+                'Data Format', ...
+                'AC', 'DC', 'Transient', 'Transient');
+
+% Handle Response
+switch dataParameter
+    case 'AC'
+        signalType = 0; % AC
+    case 'DC'
+        signalType = 1; % DC
+     case 'Transient'
+         signalType = 2; % Transient
+end
+
+% Select the file
+[fileName, pathName] = uigetfile('*.*','Pick Data File');
+dataFile = [pathName, fileName];
+
+%import data
+allData = importdata(dataFile);
+
+
+Fs = 100*10^3;
+startData = 10;
+stopData = 100;
+numHarmonics = 5;
+
+y = allData.data(startData:1:stopData,2); 
+
+
+% Length of the data
+NFFT = length(y);
+Y = fft(y,NFFT);
+
+%This example shows explicitly how to calculate the total harmonic distortion 
+%in dBc for a signal consisting of the fundamental and four harmonics.
+
+%r = thd(x,fs,n) specifies the sample rate, fs, and the number of harmonics 
+%(including the fundamental) to use in the THD calculation
+
+r = thd(y,Fs,numHarmonics);
+
+
+
+%Phase of the FFT
+phaseY = unwrap(angle(Y));  % Phase of the FFT
+
+%Finding the fundamental frequency
+
+%1.Find all maxima of the fft
+magnitudeY = abs(Y);        % Magnitude of the FFT
+magnitudeY = findpeaks(magnitudeY(1:NFFT/2));
+
+%2.Discard maxima below a certain level
+
+fundamentalFreq = min(findpeaks(magnitudeY))
+
+len = length(magnitudeY); 
+t = allData.data(1:1:len,1);
+
+
+
+plot(t,magnitudeY),
+
+
+title('Fundamental frequency')
+ylabel('Frequency')
+xlabel('t')
+
+grid on;
+
+
+userSpcified = 1:1:12;
+RootMeanSquare(allData,userSpcified)
+Peak2Peak(allData,userSpcified)
+CF(allData,userSpcified)
+
+% Root Mean Square function
+function RMS = RootMeanSquare(x,y)
+
+RMS = rms(x.data(y),2);
+return
+end
+
+% Root Mean Square function
+function P2P = Peak2Peak(x,y)
+P2P = peak2peak(x.data(y),2);
+return
+end
+
+% Root Mean Square function
+function crestFactor = CF(x,y)
+crestFactor = peak2rms(x.data(y),2);
+return
+end
+
+
+ 
+
+
+
+
+
+
+
+
+
