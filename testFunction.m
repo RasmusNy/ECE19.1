@@ -1,6 +1,11 @@
-[maxValue, minValue, meanValue] = Max_Min_Mean(allData.data);
-[rmsValue] = RMS(allData.data);
-[crestfactorValue] = crestFactor(allData.data);
+%[crestfactorValue] = crestFactor(allData.data);
 %[upperEnvelope,lowerEnvelope] =envelope(allData.data(1:1:3000,2),15,'peak');
 %[pks,locs] = findpeaks(upperEnvelope);
 %period = mean(diff(locs));
+%[rmsValue] = RMS(allData.data);
+%[maxValue, minValue, meanValue] = Max_Min_Mean(allData.data);
+a = 500;
+b = 1000;
+[p2pRippleValue] = p2pRipple(allData.data,a,b);
+[maxValue, minValue, meanValue] = Max_Min_Mean(allData.data,a,b);
+[Power,Freq] = spectralAnalysis(allData.data,a,b);  % how to call function with plot?

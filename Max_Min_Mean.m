@@ -1,16 +1,16 @@
-function [maxValue, minValue, meanValue] = Max_Min_Mean(DataMatrix) %DataMatrix = allData.data
+function [maxValue, minValue, meanValue] = Max_Min_Mean(DataMatrix,cursor1,cursor2) %DataMatrix = allData.data
 %DataMatrix = allData.data;      % get data from matrix
-VoltageData = DataMatrix(:,2);  % channel 2
-a = 5;  %get value at cursor position
-b = 10; %get value at cursor position
-if a<b 
-    maxValue = max(VoltageData(a:b));
-    minValue = min(VoltageData(a:b));
-    meanValue = mean(VoltageData(a:b));
+Data = DataMatrix(:,2);  % channel 2
+%a = 5;  %get value at cursor position
+%b = 10; %get value at cursor position
+if cursor1 < cursor2 
+    maxValue = max(Data(cursor1:cursor2));
+    minValue = min(Data(cursor1:cursor2));
+    meanValue = mean(Data(cursor1:cursor2));
 else
-    maxValue = max(VoltageData(b:a));
-    minValue = min(VoltageData(b:a));
-    meanValue = mean(VoltageData(b:a));
+    maxValue = max(Data(cursor2:cursor1));
+    minValue = min(Data(cursor2:cursor1));
+    meanValue = mean(Data(cursor2:cursor1));
 end
 
     
