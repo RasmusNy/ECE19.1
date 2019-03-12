@@ -56,6 +56,7 @@ cursor2 = 1.0000e-04;
 distance1 = abs(data(:,1) - cursor1);
 distance2 = abs(data(:,1) - cursor2);
 
+outOfBounds = 1;
 %if one cursor exceed the lower bound, get the index of minimum time value of input data
 if cursor1 < min(data(:,1)) && cursor2 <= max(data(:,1))
     cursorIndex1 = find(data(:,1)== min(data(:,1))); 
@@ -75,7 +76,14 @@ elseif cursor1 < min(data(:,1)) && cursor2 > max(data(:,1))
 elseif cursor1 >= min(data(:,1)) && cursor2 <= max(data(:,1))
     cursorIndex1 = find(distance1 == min(distance1));
     cursorIndex2 = find(distance2 == min(distance2));
-end
+    
+%if both cursor exceed the upper bound 
+elseif cursor1 > max(data(:,1)) && cursor2 > max(data(:,1))
+  outOfBounds = 0;
+  
+%if both cursor exceed the lower bound
+elseif cursor1 < min(data(:,1)) && cursor2 < min(data(:,1))
+  outOfBounds = 0;
 
 
 % AC File Processing
