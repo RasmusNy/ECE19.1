@@ -28,10 +28,18 @@ end
 % Modulation
 function M = Modulation(startIndex,stopIndex,channel)
 
-M = allData.data(startIndex:1:stopIndex,channel);
+signal = allData.data(startIndex:1:stopIndex,channel);
 t = linspace(1,stopIndex,length(M));
 
-plot(t,M)
+peaks = findpeak(signal);
+maxPeak = max(peaks);
+minPeak = min(peaks);
+
+%Return difference between maximum peak and minimum peak
+M = maxPeak - minPeak 
+
+
+plot(t,signal)
 
 [up,lo] = envelope(y);
 hold on
