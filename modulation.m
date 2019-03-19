@@ -1,29 +1,43 @@
 %Modulation
 %Input signal
-input = allData.data(1:1:1000,2);
-t = allData.data(1:1:1000,1);
-Am = max(input); %peak of the input signal
-fs = 100000;
-ts = 1/fs;
-figure(1)
-subplot(3,1,1);
-plot(t,input);
-title('Input Signal');
-grid on;
+Data = allData.data(:,2);
+t = allData.data(:,1);
+a = 1;
+b = 5000;
 
-%Carrier signal
-Ac = Am/1;
-fc = 10000;
-tc = 1/fc;
-yc = Ac*sin(2*pi*fc*t);
-subplot(3,1,2);
-plot(t,yc)
-grid on;
-title('Carrier Signal');
-
-%Modulation signal
-y = ammod(input,10000,100000);
-subplot(3,1,3);
-plot(t,y)
-title('Amplitude Modulated Signal');
-grid on;
+if a < b
+    [upperEnvelope,lowerEnvelope] = envelope(Data(a:b),150,'peak');
+    maxValue = max(upperEnvelope);
+    minValue = min(upperEnvelope);
+    modulationAmplidute = maxValue - minValue;
+    
+elseif a > b
+    [upperEnvelope,lowerEnvelope] = envelope(Data(b:a),150,'peak');
+    maxValue = max(upperEnvelope);
+    minValue = min(upperEnvelope);
+    modulationAmplidute = maxValue - minValue;
+end
+plot(upperEnvelope);
+% signal = allData.data(1:1:1000,2);
+% t = linspace(1,stopIndex,length(M));
+% 
+% peaks = findpeak(signal);
+% maxPeak = max(peaks);
+% minPeak = min(peaks);
+% 
+% %Return difference between maximum peak and minimum peak
+% M = maxPeak - minPeak 
+% 
+% 
+% plot(t,signal)
+% 
+% [up,lo] = envelope(y);
+% hold on
+% plot(t,up,t,lo')
+% hold off
+% 
+% title('Modulation')
+% ylabel('Amplitude')
+% xlabel('# of Data Points')
+% return
+% end
