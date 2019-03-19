@@ -17,4 +17,4 @@ elseif a > b
     minValue = min(upperEnvelope);
     modulationAmplidute = maxValue - minValue;
 end
-plot(upperEnvelope);
+envelope(Data(a:b),150,'peak')
