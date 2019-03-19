@@ -18,26 +18,3 @@ elseif a > b
     modulationAmplidute = maxValue - minValue;
 end
 plot(upperEnvelope);
-% signal = allData.data(1:1:1000,2);
-% t = linspace(1,stopIndex,length(M));
-% 
-% peaks = findpeak(signal);
-% maxPeak = max(peaks);
-% minPeak = min(peaks);
-% 
-% %Return difference between maximum peak and minimum peak
-% M = maxPeak - minPeak 
-% 
-% 
-% plot(t,signal)
-% 
-% [up,lo] = envelope(y);
-% hold on
-% plot(t,up,t,lo')
-% hold off
-% 
-% title('Modulation')
-% ylabel('Amplitude')
-% xlabel('# of Data Points')
-% return
-% end
