@@ -124,8 +124,9 @@ elseif(length(phv) < length(phi))
         counter = counter + 1;
     end
 end
-icount = 1;
-vcount = 1;
+% icount = 1;
+% vcount = 1;
+counter = 1;
 % Reactive power
 if(length(phv) >= length(phi))
     for k = 1:length(phi)
@@ -133,23 +134,34 @@ if(length(phv) >= length(phi))
        Preact = Preact + temp;
     end
 elseif(length(phv) < length(phi))
-    while icount ~= length(loci) && vcount ~= length(locv)
-       if icount == length(loci) && loci(icount) < locv(vcount)
-           vcount = length(vcount);
-       elseif vcount == length(locv) && loci(icount) > locv(vcount)
-           icount = length(icount);
-       end
-        
-       if loci(icount) > locv(vcount)
-           vcount = vcount + 1;
-       elseif loci(icount) < locv(vcount)
-           icount = icount + 1;
-       else
-           temp = RMSv(vcount)*RMSi(icount)*(sin(phv(vcount)-phi(icount)));
-           Preact = Preact + temp;
-           icount = icount + 1;
-           vcount = vcount + 1;
-       end
+    %TRIED THIS MORE EFFICIENT WAY BUT CAN'T QUITE GET IT TO WORK.
+    
+%     while icount ~= length(loci) && vcount ~= length(locv)
+%        if icount == length(loci) && loci(icount) < locv(vcount)
+%            vcount = length(vcount);
+%        elseif vcount == length(locv) && loci(icount) > locv(vcount)
+%            icount = length(icount);
+%        end
+%         
+%        if loci(icount) > locv(vcount)
+%            vcount = vcount + 1;
+%        elseif loci(icount) < locv(vcount)
+%            icount = icount + 1;
+%        else
+%            temp = RMSv(vcount)*RMSi(icount)*(sin(phv(vcount)-phi(icount)));
+%            Preact = Preact + temp;
+%            icount = icount + 1;
+%            vcount = vcount + 1;
+%        end
+%     end
+    while counter ~= length(loci)
+        for k = 1:length(locv)
+            if loci(counter) == locv(k)
+               temp = RMSv(k)*RMSi(k)*(sin(phv(k)-phi(k)));
+               Preact = Preact + temp;
+            end
+        end
+        counter = counter + 1;
     end
 end
 
