@@ -1,49 +1,38 @@
 %Modulation
+%Modulation
 %Input signal
-load('allData.mat')
+load('allDataAC.mat');
 Data = allData.data(:,2);
 t = allData.data(:,1);
 a = 1;
-b = 10000;
+b = 100000;
+x = Data(a:b);
+
+%A zero-crossing is a point where the sign of a mathematical function changes (e.g. from positive to negative) 
+% upward zero-crossings to nearest time step
+upZeroCrossing = find(x(1:end-1) <= 0 & x(2:end) > 0);
+PeakDistance = upZeroCrossing(2)-upZeroCrossing(1); % distance between 2 peaks equals to distance between 2 zero-crossing points
+minPeakDistance = PeakDistance - 1; % -1 data point so it won't ignore the next peak
 
 if a < b
-    [upperEnvelope,lowerEnvelope] = envelope(Data(a:b),150,'peak');
+    [upperEnvelope,lowerEnvelope] = envelope(Data(a:b),minPeakDistance,'peak');
     maxValue = max(upperEnvelope);
     minValue = min(upperEnvelope);
     modulationAmplidute = maxValue - minValue;
     
 elseif a > b
-    [upperEnvelope,lowerEnvelope] = envelope(Data(b:a),150,'peak');
+    [upperEnvelope,lowerEnvelope] = envelope(Data(b:a),minPeakDistance,'peak');
     maxValue = max(upperEnvelope);
     minValue = min(upperEnvelope);
     modulationAmplidute = maxValue - minValue;
 end
-envelope(Data(a:b),150,'peak')
-% dt = t(2)-t(1);
-% findpeaks(Data(a:b),'MinPeakHeight',31.2300,'MinPeakDistance',round(0.5/100000))
-% findpeaks(Data(a:b),'MinPeakHeight',31.2300)
-% envelope(Data(a:b),round(0.5/100000),'peak')
-
-% signal = allData.data(1:1:1000,2);
-% t = linspace(1,stopIndex,length(M));
-% 
-% peaks = findpeak(signal);
-% maxPeak = max(peaks);
-% minPeak = min(peaks);
-% 
-% %Return difference between maximum peak and minimum peak
-% M = maxPeak - minPeak 
-% 
-% 
-% plot(t,signal)
-% 
-% [up,lo] = envelope(y);
-% hold on
-% plot(t,up,t,lo')
+% [up,lo] = envelope(Data(a:b),150,'peak');
+% plot(t(a:b),up,'linewidth',2);
+% hold on;
+% plot(t(a:b),lo,'linewidth',2);
+% hold on;
+% plot(t(a:b),Data(a:b),'linewidth',2);
 % hold off
-% 
-% title('Modulation')
-% ylabel('Amplitude')
-% xlabel('# of Data Points')
-% return
-% end
+
+envelope(Data(a:b),minPeakDistance,'peak')
+% findpeaks(Data(a:b),'MinPeakDistance',minPeakDistance);
