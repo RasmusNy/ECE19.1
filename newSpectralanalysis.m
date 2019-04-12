@@ -38,8 +38,9 @@ load('allData.mat');
 % xlabel('Frequency (Hertz)')
 % ylabel('Magnitude')
 
-signal = allData.data(1:1:10000,2);
-time = allData.data(1:1:10000,1);
+
+signal = allData.data(1:1:10000,2); %start index =1; stop index=10000
+time = allData.data(1:1:10000,1);   %start index =1; stop index=10000
 Ts = mean(diff(time));
 Fs=1/Ts;      
 L = length(signal); % Window Length of FFT    
@@ -49,9 +50,12 @@ signaldft_HannWnd = fft(signal_HannWnd,NFFT)/L;
 result = abs(signaldft_HannWnd);
 result = result (1:NFFT/2+1);
 f = Fs/2*linspace(0,1,NFFT/2+1); 
-plot(f,2*result); %Hanning window Amplitude Correction Factor = 2
+figure(1)
+%plot(f,2*result); %Hanning window Amplitude Correction Factor = 2
 % set(gca, 'XScale', 'log');
-% semilogx(f,2*result)
+semilogx(f,2*result)
+figure(2)
+%plot(f,2*result);
 axis([0,Fs/2,0,0.2]);   % Zoom in 
 
 title('Amplitude Spectrum of the Signal');grid;
