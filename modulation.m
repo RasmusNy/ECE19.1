@@ -8,7 +8,7 @@ a = 1;
 b = 100000;
 x = Data(a:b);
 
-%A zero-crossing is a point where the sign of a mathematical function changes (e.g. from positive to negative) 
+%A zero-crossing point is where the sign of a mathematical function changes (positive to negative) 
 % upward zero-crossings to nearest time step
 upZeroCrossing = find(x(1:end-1) <= 0 & x(2:end) > 0);
 PeakDistance = upZeroCrossing(2)-upZeroCrossing(1); % distance between 2 peaks equals to distance between 2 zero-crossing points
