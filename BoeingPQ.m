@@ -102,23 +102,21 @@ pki = [pki ; iabs_modified(loci)];
 Pavg = 0;
 Preact = 0;
 PF = 0;
-RMSv = [];
-RMSi = [];
+RMSv = zeros(1,length(locv));
+RMSi = zeros(1,length(loci));
 
 % Voltage rms fourier series calculation
 for k = 1:length(locv)
-    temp = (pkv(k)^2)/2;
-    vrms = vrms + temp;
-    RMSv = [RMSv ; temp];
+    vrms = vrms + (pkv(k)^2)/2;
+    RMSv(k) = (pkv(k)^2)/2;
 end
 vrms = sqrt(vrms);
 RMSv = sqrt(RMSv);
 
 % Current rms fourier series calculation
 for k = 1:length(loci)
-    temp = (pki(k)^2)/2;
-    irms = irms + temp;
-    RMSi = [RMSi ; temp];
+    irms = irms + (pki(k)^2)/2;
+    RMSi(k) = (pki(k)^2)/2;
 end
 irms = sqrt(irms);
 RMSi = sqrt(RMSi);
@@ -129,10 +127,8 @@ if(length(locv) >= length(loci))
     while counter ~= length(locv)+1
         for k = 1:length(loci)
             if locv(counter) == loci(k)
-                temp = RMSv(counter)*RMSi(k)*(cos(phv(counter)-phi(k)));
-                Pavg = Pavg + temp;
-                temp = RMSv(counter)*RMSi(k)*(sin(phv(counter)-phi(k)));
-                Preact = Preact + temp;
+                Pavg = Pavg + RMSv(counter)*RMSi(k)*(cos(phv(counter)-phi(k)));
+                Preact = Preact + RMSv(counter)*RMSi(k)*(sin(phv(counter)-phi(k)));
             end
         end
         counter = counter + 1;
@@ -141,10 +137,8 @@ elseif(length(locv) < length(loci))
     while counter ~= length(loci)+1
         for k = 1:length(locv)
             if loci(counter) == locv(k)
-               temp = RMSv(k)*RMSi(counter)*(cos(phv(k)-phi(counter)));
-               Pavg = Pavg + temp;
-               temp = RMSv(k)*RMSi(counter)*(sin(phv(k)-phi(counter)));
-               Preact = Preact + temp;
+               Pavg = Pavg + RMSv(k)*RMSi(counter)*(cos(phv(k)-phi(counter)));
+               Preact = Preact + RMSv(k)*RMSi(counter)*(sin(phv(k)-phi(counter)));
             end
         end
         counter = counter + 1;
@@ -153,11 +147,11 @@ end
 
 %Power Factor
 if(length(locv) >= length(loci))
-    for k = 1:length(phi)
+    for k = 1:length(loci)
        PF = (Pavg/(vrms*irms));
     end
 elseif(length(locv) < length(loci))
-    for k = 1:length(phv)
+    for k = 1:length(locv)
        PF = (Pavg/(vrms*irms));
     end
 end
